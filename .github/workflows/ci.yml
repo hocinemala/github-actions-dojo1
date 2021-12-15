@@ -5,7 +5,8 @@ on:
   push:
 
 jobs:
-  example:
+  lint-all:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,7 +16,14 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  sast:
+    name: Static code analysis
+    runs-on: ubuntu-latest
+    needs:
+      - lint-all
+    steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - run: "echo $PAT | docker login ghcr.io -u hocinemala --password-stdin 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"
+      - run: "pip install -r requirements.txt"
