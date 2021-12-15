@@ -18,3 +18,4 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+      - run: "echo $PAT | docker login ghcr.io -u hocinemala --password-stdin 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"
